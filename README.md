@@ -6,6 +6,7 @@ Table of Contents
 
 * [Directory Structure](#directory-structure)
 * [CPU Design](#cpu-design)
+* [Hazard Handling](#hazard-handling)
 
 # Directory Structure
 <pre>
@@ -39,8 +40,22 @@ Table of Contents
 </pre>
 
 # CPU Design
-![](Diagrams/pipeline.png)
+![](pipeline.png)
 - 32-bit computing  
-- The CPU utilizes the Harvard architecture
+- Transformed from the single-cycle CPU to a pipelined architecture
 - Design is based on the RISC-V instruction set architecture (ISA)
-- The CPU is a pipelined, single-core CPU that can execute the instructions in the base RV32I subset of the RISC-V ISA (except for those related to exceptions and interrupts).
+- The CPU utilizes hardware-based hazard handling
+- Reference : Yamin Li. Computer Organization and Design. Lecture presented at Hosei University, Fall 2023. Retrieved from https://yamin.cis.k.hosei.ac.jp/lectures/cod/
+
+# Hazard Handling
+## Structural Hazard
+- Divided the memory into instruction memory and data memory
+- Separated the register file into write port and read port
+## Control Hazard
+- Moved the branch address acquisition (mux4x32.v) to the IF stage
+- Separated the zero flag from the ALU and created a new module to calculate whether rs1 equal to rs2 (equ.v), moving it to the ID stage
+## Data Hazard
+- Utilizing forwarding(By-Pass), pre-fetching data from registers between stages to be ahead of the ALU input
+- Applying Stall Hardware to stall the pipeline for one cycle when a load-use data hazard occurs
+
+

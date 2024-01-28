@@ -39,7 +39,7 @@ Table of Contents
 </pre>
 
 # CPU Design
-![](Diagrams/cpu.jpg)
+![](Diagrams/pipeline.png)
 - 32-bit computing  
 - The CPU utilizes the Harvard architecture
 - Design is based on the RISC-V instruction set architecture (ISA)
